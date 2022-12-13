@@ -1,0 +1,55 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div style="display: block; width: 30%; margin-left: 30%; padding-top: 160px;">
+    <form action="ChangeOwn" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="oldStreetName" value="{{ own.street }}">
+
+        <div class="form-outline">
+            <input type="text" id="City" name="city" value="{{ own.city }}" class="form-control form-control-lg" required/>
+            <label class="form-label" for="City" style="font-weight: bold; ">City</label>
+        </div>
+
+        <div class="form-outline">
+            <input type="text" id="Street" name="street" value="{{ own.street }}" class="form-control form-control-lg" required/>
+            <label class="form-label" for="Street" style="font-weight: bold; ">Street</label>
+        </div>
+
+        <div class="form-outline">
+            <img src="{{ own.img }}" width="830" height="450">
+            <input type="text" id="avatar" name="img" value="{{ own.img }}" class="form-control form-control-lg" style="margin-top: 30px;"/>
+            <label class="form-label" for="avatar" style="font-weight: bold; ">Avatar</label>
+        </div>
+
+        <select class="form-select" aria-label="Default select example" name="type" style="font-weight: bold;" required>
+            {% for type in types %}
+                {% if type == own.type  %}
+                    <option value="{{ type }}" selected>{{type}}</option>
+                {% elif type != 'All' %}
+                    <option value="{{ type }}">{{type}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        <div class="form-outline" style="margin-top: 10px;">
+            <textarea name="about" style="width: 100%;">{{own.about}}</textarea>
+            <label class="form-label" for="about" style="font-weight: bold; " >About</label>
+        </div>
+
+        <div class="form-outline" style="margin-top: 10px;">
+            <input type="number" min="1" max="10" name="raiting" value="{{ own.raiting }}" class="form-control form-control-lg" step="1" required/>
+            <label class="form-label" style="font-weight: bold; ">Raiting</label>
+        </div>
+
+        <div class="form-outline" style="margin-top: 10px;">
+            <input type="number" min="1000" name="price" value="{{ own.price }}" class="form-control form-control-lg" step="0.01" required/>
+            <label class="form-label" style="font-weight: bold; ">Price</label>
+        </div>
+
+        <button class="btn btn-outline-success" type="submit" style="background-color: green; color: white;">Change</button>
+    </form>
+</div>
+{% endblock %}
